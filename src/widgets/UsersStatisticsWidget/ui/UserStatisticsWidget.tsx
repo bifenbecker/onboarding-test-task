@@ -1,4 +1,7 @@
+"use client";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { Button } from "@mui/material";
+import Link from "next/link";
 
 const otherSetting = {
   height: 300,
@@ -36,16 +39,21 @@ const dataset = [
 
 export default function UserStatisticsWidget() {
   return (
-    <BarChart
-      dataset={dataset}
-      xAxis={[
-        {
-          scaleType: "band",
-          dataKey: "date",
-        },
-      ]}
-      series={[{ dataKey: "users", label: "Users" }]}
-      {...otherSetting}
-    />
+    <>
+      <BarChart
+        dataset={dataset}
+        xAxis={[
+          {
+            scaleType: "band",
+            dataKey: "date",
+          },
+        ]}
+        series={[{ dataKey: "users", label: "Users" }]}
+        {...otherSetting}
+      />
+      <Button variant="outlined">
+        <Link href="/onboarding">Onboarding</Link>
+      </Button>
+    </>
   );
 }

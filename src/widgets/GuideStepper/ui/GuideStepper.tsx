@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 
 import {
   Button,
@@ -13,12 +13,18 @@ import {
 
 import { steps } from "../configs";
 
-export default function GuideStepper() {
+declare type GuideStepperProps = {
+  finishCallback?: () => void;
+};
+
+export default function GuideStepper({ finishCallback }: GuideStepperProps) {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
+
+  const handleFinish = finishCallback;
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -28,7 +34,7 @@ export default function GuideStepper() {
     setActiveStep(0);
   };
   return (
-    <Box sx={{ maxWidth: 400 }}>
+    <Box sx={{ maxWidth: 400, margin: "0 auto" }}>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
@@ -46,7 +52,9 @@ export default function GuideStepper() {
               <Box sx={{ mb: 2 }}>
                 <Button
                   variant="contained"
-                  onClick={handleNext}
+                  onClick={
+                    index === steps.length - 1 ? handleFinish : handleNext
+                  }
                   sx={{ mt: 1, mr: 1 }}
                 >
                   {index === steps.length - 1 ? "Finish" : "Next"}
