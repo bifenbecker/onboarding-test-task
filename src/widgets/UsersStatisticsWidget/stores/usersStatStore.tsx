@@ -11,13 +11,13 @@ interface UsersStatStore {
 
 const usersStatStore = create<UsersStatStore, [["zustand/immer", never]]>(
   immer(
-    zukeeper((set) => ({
+    zukeeper((set: (arg0: (state: UsersStatStore) => void) => void) => ({
       dataset: [],
       addUser: () =>
-        set((state) => {
+        set((state: { dataset: { users: number; date: string }[] }) => {
           const currentDate = new Date().toDateString();
           const findDateIndex = state.dataset.findIndex(
-            (el) => el.date === currentDate
+            (el: { date: string }) => el.date === currentDate
           );
           if (findDateIndex !== -1) {
             const findDate = state.dataset[findDateIndex];
